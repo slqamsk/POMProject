@@ -57,7 +57,7 @@ public class POMFlightsTests {
 
     //4. Успешная регистрация с данными по умолчанию
     @Test
-    void test04WrongPassportNumber() {
+    void test04SuccessRegistrationDefault() {
         // Страница логина
         LoginPage loginPage = new LoginPage();
         loginPage.login("standard_user", "stand_pass1");
@@ -74,6 +74,6 @@ public class POMFlightsTests {
         // Страница регистрации на рейс
         RegistrationPage registrationPage = new RegistrationPage();
         registrationPage.isFlightDataCorrect("Москва", "Нью-Йорк");
-        registrationPage.register();
+        registrationPage.successRegistration();
     }
 }

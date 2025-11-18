@@ -19,7 +19,7 @@ public class RegistrationPage {
             .shouldHave(text(cityFrom + " → " + cityTo));
     }
 
-    public void register() {
+    public void successRegistration() {
         buttonFinishRegistration.click();
         Alert alert= switchTo().alert();
         assertTrue(alert.getText().contains("Бронирование завершено"));
