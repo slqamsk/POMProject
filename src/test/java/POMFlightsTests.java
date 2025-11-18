@@ -3,8 +3,9 @@ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.*;
-import pages.FlightsList;
+import pages.FlightsListPage;
 import pages.LoginPage;
+import pages.RegistrationPage;
 import pages.SearchPage;
 
 @TestMethodOrder(MethodOrderer.DisplayName.class)
@@ -16,7 +17,7 @@ public class POMFlightsTests {
 
     @BeforeEach
     void setUp() {
-        open("https://slqa.ru/cases/DeepSeekFlights/");
+        open("https://slqamsk.github.io/cases/slflights/v01/");
         getWebDriver().manage().window().maximize();
     }
 
@@ -50,21 +51,29 @@ public class POMFlightsTests {
         SearchPage searchPage = new SearchPage();
         searchPage.search("24.11.2025", "Казань", "Париж");
 
-        FlightsList flightsList = new FlightsList();
+        FlightsListPage flightsList = new FlightsListPage();
         flightsList.isNoFlights();
     }
 
-    //4. Неправильный номер паспорта
+    //4. Успешная регистрация с данными по умолчанию
     @Test
     void test04WrongPassportNumber() {
+        // Страница логина
         LoginPage loginPage = new LoginPage();
         loginPage.login("standard_user", "stand_pass1");
         loginPage.isLoginSuccessful("Иванов Иван Иванович");
 
+        // Страница поиска рейсов
         SearchPage searchPage = new SearchPage();
-        searchPage.search("24.11.2025", "Москва", "Нью-Йорк");
+        searchPage.search("30.12.2025", "Москва", "Нью-Йорк");
 
-        FlightsList flightsList = new FlightsList();
+        // Страница со списком найденных рейсов
+        FlightsListPage flightsList = new FlightsListPage();
         flightsList.registerToFirstFlight();
+
+        // Страница регистрации на рейс
+        RegistrationPage registrationPage = new RegistrationPage();
+        registrationPage.isFlightDataCorrect("Москва", "Нью-Йорк");
+        registrationPage.register();
     }
 }

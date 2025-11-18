@@ -5,7 +5,7 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
 import com.codeborne.selenide.SelenideElement;
 
-public class FlightsList {
+public class FlightsListPage {
     SelenideElement
         flightsTable = $("#flightsTable"),
         registerButton = $x("//button[.='Зарегистрироваться']");
