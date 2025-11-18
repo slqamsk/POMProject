@@ -1,27 +1,27 @@
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
-import com.codeborne.selenide.logevents.SelenideLogger;
-import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.*;
 import pages.FlightsListPage;
 import pages.LoginPage;
 import pages.RegistrationPage;
 import pages.SearchPage;
+// ... Остальные импорты
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
 
 @TestMethodOrder(MethodOrderer.DisplayName.class)
 public class POMFlightsTests {
-   @BeforeAll
-   static void beforeAll() {
-       SelenideLogger.addListener("allure", new AllureSelenide());
-   }
+    @BeforeAll
+    static void beforeAll() {
+        SelenideLogger.addListener("allure", new AllureSelenide());
+    }
 
     @BeforeEach
     void setUp() {
         open("https://slqamsk.github.io/cases/slflights/v01/");
         getWebDriver().manage().window().maximize();
     }
-
-    //Автотесты
+    // ... Автотесты
     // 1. Неуспешный логин
     @Test
     void test01WrongPassword() {
@@ -74,6 +74,29 @@ public class POMFlightsTests {
         // Страница регистрации на рейс
         RegistrationPage registrationPage = new RegistrationPage();
         registrationPage.isFlightDataCorrect("Москва", "Нью-Йорк");
-        registrationPage.successRegistration();
+        registrationPage.successDefaultRegistration();
+    }
+
+    // 5. Пустые поля
+    @Test
+    void test05EmptyField() {
+        // Страница логина
+        LoginPage loginPage = new LoginPage();
+        loginPage.login("standard_user", "stand_pass1");
+        loginPage.isLoginSuccessful("Иванов Иван Иванович");
+
+        // Страница поиска рейсов
+        SearchPage searchPage = new SearchPage();
+        searchPage.search("30.12.2025", "Москва", "Нью-Йорк");
+
+        // Страница со списком найденных рейсов
+        FlightsListPage flightsList = new FlightsListPage();
+        flightsList.registerToFirstFlight();
+
+        // Страница регистрации на рейс
+        RegistrationPage registrationPage = new RegistrationPage();
+        registrationPage.isFlightDataCorrect("Москва", "Нью-Йорк");
+        registrationPage.registration("", "", "", "");
+        registrationPage.isErrorFillAllFied();
     }
 }

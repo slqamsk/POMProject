@@ -7,8 +7,8 @@ import com.codeborne.selenide.SelenideElement;
 
 public class FlightsListPage {
     SelenideElement
-        flightsTable = $("#flightsTable"),
-        registerButton = $x("//button[.='Зарегистрироваться']");
+            flightsTable = $("#flightsTable"),
+            registerButton = $x("//button[.='Зарегистрироваться']");
 
     public void isNoFlights() {
         flightsTable.shouldHave(text("Рейсов по вашему запросу не найдено."));

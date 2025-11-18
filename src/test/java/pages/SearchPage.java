@@ -7,11 +7,11 @@ import com.codeborne.selenide.SelenideElement;
 
 public class SearchPage {
     SelenideElement
-        cityFrom = $("#departureCity"),
-        cityTo = $("#arrivalCity"),
-        departureDate = $("#departureDate"),
-        findButton = $x("//button[.='Найти']"),
-        message = $("#searchMessage");
+            cityFrom = $("#departureCity"),
+            cityTo = $("#arrivalCity"),
+            departureDate = $("#departureDate"),
+            findButton = $x("//button[.='Найти']"),
+            message = $("#searchMessage");
 
     public void search(String departureDate) {
         this.departureDate.setValue(departureDate);
