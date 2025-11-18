@@ -1,12 +1,19 @@
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
+import org.junit.jupiter.api.*;
 import pages.FlightsList;
 import pages.LoginPage;
 import pages.SearchPage;
 
+@TestMethodOrder(MethodOrderer.DisplayName.class)
 public class POMFlightsTests {
+   @BeforeAll
+   static void beforeAll() {
+       SelenideLogger.addListener("allure", new AllureSelenide());
+   }
+
     @BeforeEach
     void setUp() {
         open("https://slqa.ru/cases/DeepSeekFlights/");
